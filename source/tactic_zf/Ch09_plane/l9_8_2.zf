@@ -1,0 +1,10 @@
+include "../rew_type.zf".
+rewrite[name "LabelOS"] forall (A B P Q : point). OS A B P Q <=> (exists (R : point). TS A B P R && TS A B Q R).
+rewrite[name "LabelReflect"] forall (P1 P A B : point). Reflect P1 P A B <=> (A != B && ReflectL P1 P A B) || (A = B && Midpoint A P P1).
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#eq_dec_points
+assert[name "Labeleq_dec_points"] forall (A B : point). A=B || A!=B.
+#l7_2
+assert[name "Labell7_2"] forall (M A B : point). Midpoint M A B => Midpoint M B A.
+goal forall (P Q A B C : point). TS P Q A C => OS P Q A B => TS P Q B C.

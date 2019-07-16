@@ -1,0 +1,9 @@
+include "../rew_type.zf".
+#col_trivial_2
+assert[name "Labelcol_trivial_2"] forall (A B : point). Col A B B.
+rewrite[name "Labelsum3"] forall (O E E1 A B C S : point). sum3 O E E1 A B C S <=> (exists (AB : point). Sum O E E1 A B AB && Sum O E E1 AB C S).
+#sum3_comm_1_2
+assert[name "Labelsum3_comm_1_2"] forall (O E E1 A B C S : point). sum3 O E E1 A B C S => sum3 O E E1 B A C S.
+#sum3_permut
+assert[name "Labelsum3_permut"] forall (O E E1 A B C S : point). sum3 O E E1 A B C S => sum3 O E E1 C A B S.
+goal forall (O E E1 A B C S1 S2 : point). sum3 O E E1 A B C S1 => sum3 O E E1 A B C S2 => S1=S2.

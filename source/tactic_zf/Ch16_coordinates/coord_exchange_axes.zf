@@ -1,0 +1,27 @@
+include "../rew_type.zf".
+rewrite[name "LabelCd"] forall (O E S U1 U2 P X Y : point). Cd O E S U1 U2 P X Y <=> Cs O E S U1 U2 && Coplanar P S U1 U2 && (exists PX. Projp P PX S U1 && Cong_3 O E X S U1 PX) && (exists (PY : point). Projp P PY S U2 && Cong_3 O E Y S U2 PY).
+rewrite[name "LabelMidpoint"] forall (M A B : point). Midpoint M A B <=> Bet A M B && Cong A M M B.
+rewrite[name "LabelProjp"] forall (P Q A B : point). Projp P Q A B <=> A != B && ((Col A B Q && Perp A B P Q) || (Col A B P && P = Q)).
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#between_trivial
+assert[name "Labelbetween_trivial"] forall (A B : point). Bet A B B.
+#col_permutation_1
+assert[name "Labelcol_permutation_1"] forall (A B C : point). Col A B C => Col B C A.
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#col_trivial_2
+assert[name "Labelcol_trivial_2"] forall (A B : point). Col A B B.
+#cong_3_sym
+assert[name "Labelcong_3_sym"] forall (A B C A1 B1 C1 : point). Cong_3 A B C A1 B1 C1 => Cong_3 A1 B1 C1 A B C.
+#cong_reflexivity
+assert[name "Labelcong_reflexivity"] forall (A B : point). Cong A B A B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#cong_transitivity
+assert[name "Labelcong_transitivity"] forall (A B C D E F : point). Cong A B C D => Cong C D E F => Cong A B E F.
+#eq_dec_points
+assert[name "Labeleq_dec_points"] forall (A B : point). A=B || A!=B.
+#l4_13
+assert[name "Labell4_13"] forall (A B C A1 B1 C1 : point). Col A B C => Cong_3 A B C A1 B1 C1 => Col A1 B1 C1.
+goal forall (O E S U1 U2 P X Y : point). Cd O E S U1 U2 P X Y => Cd O E S U2 U1 P X Y.

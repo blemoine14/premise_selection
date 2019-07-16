@@ -1,0 +1,17 @@
+include "../rew_type.zf".
+rewrite[name "LabelQ_Cong_Null"] forall (l : point->point->prop). Q_Cong_Null l <=> Q_Cong l && (exists (A : point). l A A).
+#ang_distincts
+assert[name "Labelang_distincts"] forall (A B C : point) (a : point->point->point->prop). Q_CongA a => a A B C => A!=B && C!=B.
+#bet_col
+assert[name "Labelbet_col"] forall (A B C : point). Bet A B C => Col A B C.
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#cong_identity
+assert[name "Labelcong_identity"] forall (A B C : point). Cong A B C C => A = B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#l9_2
+assert[name "Labell9_2"] forall (A B P Q : point). TS A B P Q => TS A B Q P.
+goal forall (A B P : point) (lp l : point->point->prop) (a : point->point->point->prop). ~Col A B P => ~Q_CongA_Null_Acute a => Q_Cong l => Q_Cong lp =>Q_CongA_Acute a => l A B => Lcos lp l a => (exists (C : point). OS A B C P && a A B C && lp B C).

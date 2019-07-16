@@ -1,0 +1,26 @@
+include "../rew_type.zf".
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#col_permutation_1
+assert[name "Labelcol_permutation_1"] forall (A B C : point). Col A B C => Col B C A.
+#col_permutation_3
+assert[name "Labelcol_permutation_3"] forall (A B C : point). Col A B C => Col C B A.
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#col_trivial_2
+assert[name "Labelcol_trivial_2"] forall (A B : point). Col A B B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#l7_20
+assert[name "Labell7_20"] forall (M A B : point). Col A M B => Cong M A M B => A=B || Midpoint M A B.
+#l8_14_2_1b_bis
+assert[name "Labell8_14_2_1b_bis"] forall (A B C D X : point). Perp A B C D => Col X A B => Col X C D => Perp_at X A B C D.
+#l8_2
+assert[name "Labell8_2"] forall (A B C : point). Per A B C => Per C B A.
+#l8_7
+assert[name "Labell8_7"] forall (A B C : point). Per A B C => Per A C B => B=C.
+#not_col_distincts
+assert[name "Labelnot_col_distincts"] forall (A B C : point). ~Col A B C => ~Col A B C && A!=B && B!=C && A!=C.
+#per_per_col
+assert[name "Labelper_per_col"] forall (A B C X : point). Per A X C => X!=C => Per B X C => Col A B X.
+goal forall (A B X Y : point). A!=B => Per A B X => Per A B Y => Cong B X B Y => X=Y || ReflectL X Y A B.

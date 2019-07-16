@@ -1,0 +1,34 @@
+include "../rew_type.zf".
+rewrite[name "LabelCong_3"] forall (A B C A1 B1 C1 : point). Cong_3 A B C A1 B1 C1 <=> Cong A B A1 B1 && Cong A C A1 C1 && Cong B C B1 C1.
+rewrite[name "LabelOut"] forall (P A B : point). Out P A B <=> A != P && B != P && (Bet P A B || Bet P B A).
+#angle_construction_1
+assert[name "Labelangle_construction_1"] forall (A B C A1 B1 P : point). ~Col A B C => ~Col A1 B1 P => (exists (C1 : point). CongA A B C A1 B1 C1 && OS A1 B1 C1 P).
+#col_permutation_1
+assert[name "Labelcol_permutation_1"] forall (A B C : point). Col A B C => Col B C A.
+#col_permutation_2
+assert[name "Labelcol_permutation_2"] forall (A B C : point). Col A B C => Col C A B.
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#cong_identity
+assert[name "Labelcong_identity"] forall (A B C : point). Cong A B C C => A = B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#cong_transitivity
+assert[name "Labelcong_transitivity"] forall (A B C D E F : point). Cong A B C D => Cong C D E F => Cong A B E F.
+#conga__or_out_ts
+assert[name "Labelconga__or_out_ts"] forall (A B C C1 : point). CongA A B C A B C1 => Out B C C1 || TS A B C C1.
+#conga_sym
+assert[name "Labelconga_sym"] forall (A B C A1 B1 C1 : point). CongA A B C A1 B1 C1 => CongA A1 B1 C1 A B C.
+#conga_trans
+assert[name "Labelconga_trans"] forall (A B C A1 B1 C1 A2 B2 C2 : point). CongA A B C A1 B1 C1 => CongA A1 B1 C1 A2 B2 C2 => CongA A B C A2 B2 C2.
+#eq_dec_points
+assert[name "Labeleq_dec_points"] forall (A B : point). A=B || A!=B.
+#invert_two_sides
+assert[name "Labelinvert_two_sides"] forall (A B P Q : point). TS A B P Q => TS B A P Q.
+#one_side_symmetry
+assert[name "Labelone_side_symmetry"] forall (P Q A B : point). OS P Q A B => OS P Q B A.
+#one_side_transitivity
+assert[name "Labelone_side_transitivity"] forall (P Q A B C : point). OS P Q A B => OS P Q B C => OS P Q A C.
+#par_trans
+assert[name "Labelpar_trans"] forall (A1 A2 B1 B2 C1 C2 : point). Par A1 A2 B1 B2 => Par B1 B2 C1 C2 => Par A1 A2 C1 C2.
+goal forall (A B C A1 B1 P : point). ~Col A B C => ~Col A1 B1 P => (exists (C1 : point). CongA A B C A1 B1 C1 && TS A1 B1 C1 P).

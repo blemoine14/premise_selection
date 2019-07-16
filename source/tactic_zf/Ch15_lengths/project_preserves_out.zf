@@ -1,0 +1,19 @@
+include "../rew_type.zf".
+rewrite[name "LabelCong_3"] forall (A B C A1 B1 C1 : point). Cong_3 A B C A1 B1 C1 <=> Cong A B A1 B1 && Cong A C A1 C1 && Cong B C B1 C1.
+#bet_col
+assert[name "Labelbet_col"] forall (A B C : point). Bet A B C => Col A B C.
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#between_trivial2
+assert[name "Labelbetween_trivial2"] forall (A B : point). Bet A A B.
+#col_permutation_2
+assert[name "Labelcol_permutation_2"] forall (A B C : point). Col A B C => Col C A B.
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#cong_commutativity
+assert[name "Labelcong_commutativity"] forall (A B C D : point). Cong A B C D => Cong B A D C.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#l6_6
+assert[name "Labell6_6"] forall (P A B : point). Out P A B => Out P B A.
+goal forall (A B C A1 B1 C1 P Q X Y : point). Out A B C => ~Par A B X Y => Proj A A1 P Q X Y => Proj B B1 P Q X Y => Proj C C1 P Q X Y => Out A1 B1 C1.

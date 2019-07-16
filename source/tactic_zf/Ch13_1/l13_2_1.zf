@@ -1,0 +1,10 @@
+include "../rew_type.zf".
+#col_permutation_1
+assert[name "Labelcol_permutation_1"] forall (A B C : point). Col A B C => Col B C A.
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#euclid
+assert[name "Labeleuclid"] forall (A B C D T : point). Bet A D T => Bet B D C => A!=D =>(exists (X Y : point). Bet A B X && Bet A C Y && Bet X T Y).
+goal forall (A B C D E : point). TS A B C D => Per B C A => Per B D A => Col C D E => Perp A E C D => CongA C A B D A B => CongA B A C D A E && CongA B A D C A E && Bet C E D.

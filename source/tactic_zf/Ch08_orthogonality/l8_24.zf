@@ -1,0 +1,14 @@
+include "../rew_type.zf".
+#bet_col
+assert[name "Labelbet_col"] forall (A B C : point). Bet A B C => Col A B C.
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#col_permutation_1
+assert[name "Labelcol_permutation_1"] forall (A B C : point). Col A B C => Col B C A.
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#l7_2
+assert[name "Labell7_2"] forall (M A B : point). Midpoint M A B => Midpoint M B A.
+goal forall (A B P Q R T : point). Perp P A A B => Perp Q B A B => Col A B T => Bet P T Q => Bet B R Q => Cong A P B R => (exists (X : point). Midpoint X A B && Midpoint X P R).

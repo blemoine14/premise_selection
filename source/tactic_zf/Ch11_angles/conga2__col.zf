@@ -1,0 +1,69 @@
+include "../rew_type.zf".
+rewrite[name "LabelCong_3"] forall (A B C A1 B1 C1 : point). Cong_3 A B C A1 B1 C1 <=> Cong A B A1 B1 && Cong A C A1 C1 && Cong B C B1 C1.
+rewrite[name "LabelInAngle"] forall (P A B C : point). InAngle P A B C <=> A != B && C != B && P != B && (exists (X : point). Bet A X C && (X = B || Out B X P)).
+rewrite[name "LabelLeA"] forall (A B C D E F : point). LeA A B C D E F <=> (exists (P : point). InAngle P D E F && CongA A B C D E P).
+rewrite[name "LabelMidpoint"] forall (M A B : point). Midpoint M A B <=> Bet A M B && Cong A M M B.
+rewrite[name "LabelOS"] forall (A B P Q : point). OS A B P Q <=> (exists (R : point). TS A B P R && TS A B Q R).
+rewrite[name "LabelOut"] forall (P A B : point). Out P A B <=> A != P && B != P && (Bet P A B || Bet P B A).
+rewrite[name "LabelQ_CongA"] forall (a : point->point->point->prop). Q_CongA a <=> (exists (A B C : point). A != B && C != B && (forall (X Y Z : point). CongA A B C X Y Z <=> a X Y Z)).
+#bet_col
+assert[name "Labelbet_col"] forall (A B C : point). Bet A B C => Col A B C.
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#between_trivial
+assert[name "Labelbetween_trivial"] forall (A B : point). Bet A B B.
+#between_trivial2
+assert[name "Labelbetween_trivial2"] forall (A B : point). Bet A A B.
+#col_permutation_1
+assert[name "Labelcol_permutation_1"] forall (A B C : point). Col A B C => Col B C A.
+#col_permutation_2
+assert[name "Labelcol_permutation_2"] forall (A B C : point). Col A B C => Col C A B.
+#col_permutation_3
+assert[name "Labelcol_permutation_3"] forall (A B C : point). Col A B C => Col C B A.
+#col_permutation_4
+assert[name "Labelcol_permutation_4"] forall (A B C : point). Col A B C => Col B A C.
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#col_transitivity_1
+assert[name "Labelcol_transitivity_1"] forall (P Q A B : point). P!=Q => Col P Q A => Col P Q B => Col P A B.
+#col_trivial_1
+assert[name "Labelcol_trivial_1"] forall (A B : point). Col A A B.
+#col_trivial_2
+assert[name "Labelcol_trivial_2"] forall (A B : point). Col A B B.
+#col_trivial_3
+assert[name "Labelcol_trivial_3"] forall (A B : point). Col A B A.
+#cong_4321
+assert[name "Labelcong_4321"] forall (A B C D : point). Cong A B C D => Cong D C B A.
+#cong_commutativity
+assert[name "Labelcong_commutativity"] forall (A B C D : point). Cong A B C D => Cong B A D C.
+#cong_reflexivity
+assert[name "Labelcong_reflexivity"] forall (A B : point). Cong A B A B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#eq_dec_points
+assert[name "Labeleq_dec_points"] forall (A B : point). A=B || A!=B.
+#l6_6
+assert[name "Labell6_6"] forall (P A B : point). Out P A B => Out P B A.
+#l7_2
+assert[name "Labell7_2"] forall (M A B : point). Midpoint M A B => Midpoint M B A.
+#l8_2
+assert[name "Labell8_2"] forall (A B C : point). Per A B C => Per C B A.
+#l8_7
+assert[name "Labell8_7"] forall (A B C : point). Per A B C => Per A C B => B=C.
+#not_col_distincts
+assert[name "Labelnot_col_distincts"] forall (A B C : point). ~Col A B C => ~Col A B C && A!=B && B!=C && A!=C.
+#out_trivial
+assert[name "Labelout_trivial"] forall (P A : point). A!=P => Out P A A.
+#per_not_col
+assert[name "Labelper_not_col"] forall (A B C : point). A!=B => B!=C => Per A B C => ~Col A B C.
+#perp_comm
+assert[name "Labelperp_comm"] forall (A B C D : point). Perp A B C D => Perp B A D C.
+#perp_distinct
+assert[name "Labelperp_distinct"] forall (A B C D : point). Perp A B C D => A!=B && C!=D.
+#perp_in_left_comm
+assert[name "Labelperp_in_left_comm"] forall (A B C D X : point). Perp_at X A B C D => Perp_at X B A C D.
+#perp_left_comm
+assert[name "Labelperp_left_comm"] forall (A B C D : point). Perp A B C D => Perp B A C D.
+#symmetric_point_uniqueness
+assert[name "Labelsymmetric_point_uniqueness"] forall (A P P1 P2 : point). Midpoint P A P1 => Midpoint P A P2 => P1=P2.
+goal forall (A B C P P1 : point). ~Out B A C => CongA P B A P B C => CongA P1 B A P1 B C => Col B P P1.

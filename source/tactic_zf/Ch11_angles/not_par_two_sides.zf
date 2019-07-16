@@ -1,0 +1,29 @@
+include "../rew_type.zf".
+rewrite[name "LabelPerp"] forall (A B C D : point). Perp A B C D <=> (exists (X : point). Perp_at X A B C D).
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#between_trivial2
+assert[name "Labelbetween_trivial2"] forall (A B : point). Bet A A B.
+#col_permutation_1
+assert[name "Labelcol_permutation_1"] forall (A B C : point). Col A B C => Col B C A.
+#col_permutation_2
+assert[name "Labelcol_permutation_2"] forall (A B C : point). Col A B C => Col C A B.
+#col_permutation_3
+assert[name "Labelcol_permutation_3"] forall (A B C : point). Col A B C => Col C B A.
+#col_permutation_4
+assert[name "Labelcol_permutation_4"] forall (A B C : point). Col A B C => Col B A C.
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#col_trivial_1
+assert[name "Labelcol_trivial_1"] forall (A B : point). Col A A B.
+#col_trivial_3
+assert[name "Labelcol_trivial_3"] forall (A B : point). Col A B A.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#eq_dec_points
+assert[name "Labeleq_dec_points"] forall (A B : point). A=B || A!=B.
+#euclid
+assert[name "Labeleuclid"] forall (A B C D T : point). Bet A D T => Bet B D C => A!=D =>(exists (X Y : point). Bet A B X && Bet A C Y && Bet X T Y).
+#perp_sym
+assert[name "Labelperp_sym"] forall (A B C D : point). Perp A B C D => Perp C D A B.
+goal forall (A B C D I : point). C!=D => Col A B I => Col C D I => ~Col A B C => (exists (X Y : point). Col C D X && Col C D Y && TS A B X Y).

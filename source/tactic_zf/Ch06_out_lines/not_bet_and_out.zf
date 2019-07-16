@@ -1,0 +1,21 @@
+include "../rew_type.zf".
+rewrite[name "LabelInter"] forall (A1 A2 B1 B2 X : point). Inter A1 A2 B1 B2 X <=> (exists (P : point). Col P B1 B2 && ~Col P A1 A2) &&Col A1 A2 X && Col B1 B2 X.
+rewrite[name "LabelOut"] forall (P A B : point). Out P A B <=> A != P && B != P && (Bet P A B || Bet P B A).
+rewrite[name "LabelPar_strict"] forall (A B C D : point). Par_strict A B C D <=> A != B && C != D && Coplanar A B C D && ~(exists (X : point). Col X A B && Col X C D).
+#bet_dec
+assert[name "Labelbet_dec"] forall (A B C : point). Bet A B C || ~Bet A B C.
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#between_trivial2
+assert[name "Labelbetween_trivial2"] forall (A B : point). Bet A A B.
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#col_trivial_1
+assert[name "Labelcol_trivial_1"] forall (A B : point). Col A A B.
+#col_trivial_2
+assert[name "Labelcol_trivial_2"] forall (A B : point). Col A B B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#lower_dim
+assert[name "Labellower_dim"] exists (PA PB PC : point).  ~(Bet PA PB PC || Bet PB PC PA || Bet PC PA PB).
+goal forall (A B C : point). ~(Bet A B C && Out B A C).

@@ -1,0 +1,18 @@
+include "../rew_type.zf".
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#col_permutation_1
+assert[name "Labelcol_permutation_1"] forall (A B C : point). Col A B C => Col B C A.
+#col_permutation_3
+assert[name "Labelcol_permutation_3"] forall (A B C : point). Col A B C => Col C B A.
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#col_trivial_1
+assert[name "Labelcol_trivial_1"] forall (A B : point). Col A A B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#par_comm
+assert[name "Labelpar_comm"] forall (A B C D : point). Par A B C D => Par B A D C.
+#par_two_sides_two_sides
+assert[name "Labelpar_two_sides_two_sides"] forall (A B C D : point). Par A B C D => TS B D A C => TS A C B D.
+goal forall (A B C D : point). Par A B C D => Cong A B C D => TS B D A C => Par B C D A && Cong B C D A && TS A C B D.

@@ -1,0 +1,15 @@
+include "../rew_type.zf".
+rewrite[name "LabelPar_strict"] forall (A B C D : point). Par_strict A B C D <=> A != B && C != D && Coplanar A B C D && ~(exists (X : point). Col X A B && Col X C D).
+#col_permutation_1
+assert[name "Labelcol_permutation_1"] forall (A B C : point). Col A B C => Col B C A.
+#col_permutation_2
+assert[name "Labelcol_permutation_2"] forall (A B C : point). Col A B C => Col C A B.
+#col_permutation_4
+assert[name "Labelcol_permutation_4"] forall (A B C : point). Col A B C => Col B A C.
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#euclid
+assert[name "Labeleuclid"] forall (A B C D T : point). Bet A D T => Bet B D C => A!=D =>(exists (X Y : point). Bet A B X && Bet A C Y && Bet X T Y).
+goal forall (A B C D E : point). TS A B C D => Per B C A => Per B D A => Col C D E => Perp A E C D => CongA B A C D A E && CongA B A D C A E && Bet C E D.

@@ -1,0 +1,37 @@
+include "../rew_type.zf".
+rewrite[name "LabelAng"] forall (A B C : point) (a : point->point->point->prop). Ang A B C a <=> Q_CongA a && a A B C.
+rewrite[name "LabelAr2"] forall (O E E1 A B C : point). Ar2 O E E1 A B C <=> ~ Col O E E1 && Col O E A && Col O E B && Col O E C.
+rewrite[name "LabelMidpoint"] forall (M A B : point). Midpoint M A B <=> Bet A M B && Cong A M M B.
+rewrite[name "LabelOut"] forall (P A B : point). Out P A B <=> A != P && B != P && (Bet P A B || Bet P B A).
+rewrite[name "LabelQ_Cong"] forall (A B C D E F : point) (l : point->point->prop). Q_Cong l <=> (exists (A B : point). forall X Y. Cong A B X Y <=> l X Y).
+rewrite[name "LabelQ_CongA"] forall (a : point->point->point->prop). Q_CongA a <=> (exists (A B C : point). A != B && C != B && (forall (X Y Z : point). CongA A B C X Y Z <=> a X Y Z)).
+rewrite[name "LabelQ_Cong_Null"] forall (l : point->point->prop). Q_Cong_Null l <=> Q_Cong l && (exists (A : point). l A A).
+#anga_is_ang
+assert[name "Labelanga_is_ang"] forall (a : point->point->point->prop). Q_CongA_Acute a => Q_CongA a.
+#between_identity
+assert[name "Labelbetween_identity"] forall (A B : point). Bet A B A => A=B.
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#between_trivial
+assert[name "Labelbetween_trivial"] forall (A B : point). Bet A B B.
+#between_trivial2
+assert[name "Labelbetween_trivial2"] forall (A B : point). Bet A A B.
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#cong_identity
+assert[name "Labelcong_identity"] forall (A B C : point). Cong A B C C => A = B.
+#cong_reflexivity
+assert[name "Labelcong_reflexivity"] forall (A B : point). Cong A B A B.
+#cong_reverse_identity
+assert[name "Labelcong_reverse_identity"] forall (A C D : point). Cong A A C D => C=D.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#cong_trivial_identity
+assert[name "Labelcong_trivial_identity"] forall (A B : point). Cong A A B B.
+#eq_dec_points
+assert[name "Labeleq_dec_points"] forall (A B : point). A=B || A!=B.
+#l6_6
+assert[name "Labell6_6"] forall (P A B : point). Out P A B => Out P B A.
+#l7_2
+assert[name "Labell7_2"] forall (M A B : point). Midpoint M A B => Midpoint M B A.
+goal forall (A : point) (l : point->point->prop). Q_Cong l => (exists (B : point). l A B).

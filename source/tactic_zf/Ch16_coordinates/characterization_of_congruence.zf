@@ -1,0 +1,48 @@
+include "../rew_type.zf".
+rewrite[name "LabelAr2"] forall (O E E1 A B C : point). Ar2 O E E1 A B C <=> ~ Col O E E1 && Col O E A && Col O E B && Col O E C.
+rewrite[name "LabelMidpoint"] forall (M A B : point). Midpoint M A B <=> Bet A M B && Cong A M M B.
+rewrite[name "LabelOut"] forall (P A B : point). Out P A B <=> A != P && B != P && (Bet P A B || Bet P B A).
+rewrite[name "LabelSum"] forall (O E E1 A B C : point). Sum O E E1 A B C <=> Ar2 O E E1 A B C && (exists (A1 C1 : point). Pj E E1 A  A1 && Col O E1 A1 && Pj O E  A1 C1 && Pj O E1 B  C1 && Pj E1 E C1 C).
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#between_trivial
+assert[name "Labelbetween_trivial"] forall (A B : point). Bet A B B.
+#between_trivial2
+assert[name "Labelbetween_trivial2"] forall (A B : point). Bet A A B.
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#cong_identity
+assert[name "Labelcong_identity"] forall (A B C : point). Cong A B C C => A = B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#conga_sym
+assert[name "Labelconga_sym"] forall (A B C A1 B1 C1 : point). CongA A B C A1 B1 C1 => CongA A1 B1 C1 A B C.
+#conga_trans
+assert[name "Labelconga_trans"] forall (A B C A1 B1 C1 A2 B2 C2 : point). CongA A B C A1 B1 C1 => CongA A1 B1 C1 A2 B2 C2 => CongA A B C A2 B2 C2.
+#eq_dec_points
+assert[name "Labeleq_dec_points"] forall (A B : point). A=B || A!=B.
+#l6_6
+assert[name "Labell6_6"] forall (P A B : point). Out P A B => Out P B A.
+#l7_2
+assert[name "Labell7_2"] forall (M A B : point). Midpoint M A B => Midpoint M B A.
+#l9_2
+assert[name "Labell9_2"] forall (A B P Q : point). TS A B P Q => TS A B Q P.
+#l9_9_bis
+assert[name "Labell9_9_bis"] forall (P Q A B : point). OS P Q A B => ~TS P Q A B.
+#le_anti_symmetry
+assert[name "Labelle_anti_symmetry"] forall (A B C D : point). Le A B C D => Le C D A B => Cong A B C D.
+#one_side_symmetry
+assert[name "Labelone_side_symmetry"] forall (P Q A B : point). OS P Q A B => OS P Q B A.
+#one_side_transitivity
+assert[name "Labelone_side_transitivity"] forall (P Q A B C : point). OS P Q A B => OS P Q B C => OS P Q A C.
+#out2_out_1
+assert[name "Labelout2_out_1"] forall (B C D X : point). Out B X C => Out B X D => Out B C D.
+#perp_right_comm
+assert[name "Labelperp_right_comm"] forall (A B C D : point). Perp A B C D => Perp A B D C.
+#prod_uniquenessA
+assert[name "Labelprod_uniquenessA"] forall (O E E1 A A1 B C : point). B!=O => Prod O E E1 A B C => Prod O E E1 A1 B C => A=A1.
+#sum_O_B
+assert[name "Labelsum_O_B"] forall (B O E E1 : point). ~ Col O E E1 => Col O E B => Sum O E E1 O B B.
+#sum_uniqueness
+assert[name "Labelsum_uniqueness"] forall (A B C1 C2 O E E1 : point). ~ Col O E E1 => Sum O E E1 A B C1 => Sum O E E1 A B C2 => C1=C2.
+goal forall (O E E1 S U1 U2 A AX AY B BX BY C CX CY D DX DY AXMBX AXMBX2 AYMBY AYMBY2 AB2 CXMDX CXMDX2 CYMDY CYMDY2 CD2 : point). Cd O E S U1 U2 A AX AY => Cd O E S U1 U2 B BX BY => Cd O E S U1 U2 C CX CY => Cd O E S U1 U2 D DX DY => Diff O E E1 AX BX AXMBX => Prod O E E1 AXMBX AXMBX AXMBX2 => Diff O E E1 AY BY AYMBY => Prod O E E1 AYMBY AYMBY AYMBY2 => Sum O E E1 AXMBX2 AYMBY2 AB2 => Diff O E E1 CX DX CXMDX => Prod O E E1 CXMDX CXMDX CXMDX2 => Diff O E E1 CY DY CYMDY => Prod O E E1 CYMDY CYMDY CYMDY2 => Sum O E E1 CXMDX2 CYMDY2 CD2 => (Cong A B C D <=> AB2 = CD2).

@@ -1,0 +1,8 @@
+include "../rew_type.zf".
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#cong_identity
+assert[name "Labelcong_identity"] forall (A B C : point). Cong A B C C => A = B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+goal forall (A B C A1 B1 C1 : point). CongA A B C A1 B1 C1 => Cong A C A1 C1 => Cong B C B1 C1 => Le B C A C => Cong B A B1 A1 && CongA B A C B1 A1 C1 && CongA B C A B1 C1 A1.

@@ -1,0 +1,12 @@
+include "../rew_type.zf".
+rewrite[name "LabelAr2"] forall (O E E1 A B C : point). Ar2 O E E1 A B C <=> ~ Col O E E1 && Col O E A && Col O E B && Col O E C.
+#between_trivial
+assert[name "Labelbetween_trivial"] forall (A B : point). Bet A B B.
+#include itself
+#pos_opp_neg
+assert[name "Labelpos_opp_neg"] forall (O E E1 A mA : point). Ps O E A => Opp O E E1 A mA => Ng O E mA.
+#sum3_comm_1_2
+assert[name "Labelsum3_comm_1_2"] forall (O E E1 A B C S : point). sum3 O E E1 A B C S => sum3 O E E1 B A C S.
+#sum3_permut
+assert[name "Labelsum3_permut"] forall (O E E1 A B C S : point). sum3 O E E1 A B C S => sum3 O E E1 C A B S.
+goal forall (O E E1 A B AmB BmA : point). Diff O E E1 A B AmB => Diff O E E1 B A BmA => Opp O E E1 AmB BmA.

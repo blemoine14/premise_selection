@@ -1,0 +1,24 @@
+include "../rew_type.zf".
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#conga_trans
+assert[name "Labelconga_trans"] forall (A B C A1 B1 C1 A2 B2 C2 : point). CongA A B C A1 B1 C1 => CongA A1 B1 C1 A2 B2 C2 => CongA A B C A2 B2 C2.
+#invert_two_sides
+assert[name "Labelinvert_two_sides"] forall (A B P Q : point). TS A B P Q => TS B A P Q.
+#l6_6
+assert[name "Labell6_6"] forall (P A B : point). Out P A B => Out P B A.
+#l9_2
+assert[name "Labell9_2"] forall (A B P Q : point). TS A B P Q => TS A B Q P.
+#l9_9_bis
+assert[name "Labell9_9_bis"] forall (P Q A B : point). OS P Q A B => ~TS P Q A B.
+#one_side_symmetry
+assert[name "Labelone_side_symmetry"] forall (P Q A B : point). OS P Q A B => OS P Q B A.
+#one_side_transitivity
+assert[name "Labelone_side_transitivity"] forall (P Q A B C : point). OS P Q A B => OS P Q B C => OS P Q A C.
+#perp_in_sym
+assert[name "Labelperp_in_sym"] forall (A B C D X : point). Perp_at X A B C D => Perp_at X C D A B.
+goal forall (A B C D A1 B1 C1 D1 X Y : point). X!=A => X!=A1 => X!=C => X!=C1 => Y!=B => Y!=B1 => Y!=D => Y!=D1 => Col X A C => Col X A A1 => Col X A1 C1 => Col Y B D => Col Y B B1 => Col Y B1 D1 => A!=C => B!=D => A!=A1 => Par_strict X A Y B => ~Par A B C D => Par A B A1 B1 => Par A D A1 D1 => Par B C B1 C1 => Par C D C1 D1.

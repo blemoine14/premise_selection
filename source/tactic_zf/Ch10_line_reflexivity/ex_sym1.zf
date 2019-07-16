@@ -1,0 +1,39 @@
+include "../rew_type.zf".
+rewrite[name "LabelAr2"] forall (O E E1 A B C : point). Ar2 O E E1 A B C <=> ~ Col O E E1 && Col O E A && Col O E B && Col O E C.
+rewrite[name "LabelCol"] forall (A B C : point). Col A B C <=> Bet A B C || Bet B C A || Bet C A B.
+rewrite[name "LabelOut"] forall (P A B : point). Out P A B <=> A != P && B != P && (Bet P A B || Bet P B A).
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#between_trivial2
+assert[name "Labelbetween_trivial2"] forall (A B : point). Bet A A B.
+#col_permutation_1
+assert[name "Labelcol_permutation_1"] forall (A B C : point). Col A B C => Col B C A.
+#col_permutation_3
+assert[name "Labelcol_permutation_3"] forall (A B C : point). Col A B C => Col C B A.
+#col_permutation_4
+assert[name "Labelcol_permutation_4"] forall (A B C : point). Col A B C => Col B A C.
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#col_trivial_1
+assert[name "Labelcol_trivial_1"] forall (A B : point). Col A A B.
+#cong_reflexivity
+assert[name "Labelcong_reflexivity"] forall (A B : point). Cong A B A B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#eq_dec_points
+assert[name "Labeleq_dec_points"] forall (A B : point). A=B || A!=B.
+#l10_2_existence_spec
+assert[name "Labell10_2_existence_spec"] forall (A B P : point). (exists (P1 : point). ReflectL P1 P A B).
+#l10_4_spec
+assert[name "Labell10_4_spec"] forall (A B P P1 : point). ReflectL P P1 A B => ReflectL P1 P A B.
+#l8_2
+assert[name "Labell8_2"] forall (A B C : point). Per A B C => Per C B A.
+#l8_21_aux
+assert[name "Labell8_21_aux"] forall (A B C : point). ~Col A B C => (exists (P T : point). Perp A B P A && Col A B T && Bet C T P).
+#not_col_exists
+assert[name "Labelnot_col_exists"] forall (A B : point). A!=B => (exists (C : point). ~Col A B C).
+#perp_right_comm
+assert[name "Labelperp_right_comm"] forall (A B C D : point). Perp A B C D => Perp A B D C.
+#perp_sym
+assert[name "Labelperp_sym"] forall (A B C D : point). Perp A B C D => Perp C D A B.
+goal forall (A B X : point). A!=B => (exists (Y : point). (Perp A B X Y || X=Y) &&(exists (M : point). Col A B M && Midpoint M X Y && Reflect X Y A B)).

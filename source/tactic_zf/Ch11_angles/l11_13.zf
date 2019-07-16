@@ -1,0 +1,29 @@
+include "../rew_type.zf".
+rewrite[name "LabelLtA"] forall (A B C D E F : point). LtA A B C D E F <=> LeA A B C D E F && ~ CongA A B C D E F.
+rewrite[name "LabelMidpoint"] forall (M A B : point). Midpoint M A B <=> Bet A M B && Cong A M M B.
+rewrite[name "LabelOut"] forall (P A B : point). Out P A B <=> A != P && B != P && (Bet P A B || Bet P B A).
+rewrite[name "LabelPar"] forall (A B C D : point). Par A B C D <=> Par_strict A B C D || (A != B && C != D && Col A C D && Col B C D).
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#col_permutation_1
+assert[name "Labelcol_permutation_1"] forall (A B C : point). Col A B C => Col B C A.
+#col_permutation_4
+assert[name "Labelcol_permutation_4"] forall (A B C : point). Col A B C => Col B A C.
+#cong_identity
+assert[name "Labelcong_identity"] forall (A B C : point). Cong A B C C => A = B.
+#cong_reflexivity
+assert[name "Labelcong_reflexivity"] forall (A B : point). Cong A B A B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#cong_transitivity
+assert[name "Labelcong_transitivity"] forall (A B C D E F : point). Cong A B C D => Cong C D E F => Cong A B E F.
+#conga_sym
+assert[name "Labelconga_sym"] forall (A B C A1 B1 C1 : point). CongA A B C A1 B1 C1 => CongA A1 B1 C1 A B C.
+#include itself
+#l11_36
+assert[name "Labell11_36"] forall (A B C D E F A1 D1 : point). A!=B => A1!=B => D!=E => D1!=E => Bet A B A1 => Bet D E D1 => (LeA A B C D E F <=> LeA D1 E F A1 B C).
+#lta_diff
+assert[name "Labellta_diff"] forall (A B C D E F : point). LtA A B C D E F => LtA A B C D E F && A!=B && C!=B && D!=E && F!=E.
+#outer_transitivity_between2
+assert[name "Labelouter_transitivity_between2"] forall (A B C D : point). Bet A B C => Bet B C D => B!=C => Bet A C D.
+goal forall (A B C D E F A1 D1 : point). CongA A B C D E F => Bet A B A1 => A1!=B => Bet D E D1 => D1!=E => CongA A1 B C D1 E F.

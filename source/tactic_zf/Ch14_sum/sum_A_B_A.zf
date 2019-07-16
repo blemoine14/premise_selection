@@ -1,0 +1,28 @@
+include "../rew_type.zf".
+rewrite[name "LabelAr2"] forall (O E E1 A B C : point). Ar2 O E E1 A B C <=> ~ Col O E E1 && Col O E A && Col O E B && Col O E C.
+rewrite[name "LabelCol"] forall (A B C : point). Col A B C <=> Bet A B C || Bet B C A || Bet C A B.
+rewrite[name "LabelOpp"] forall (O E E1 A B : point). Opp O E E1 A B <=> Sum O E E1 B A O.
+rewrite[name "LabelSum"] forall (O E E1 A B C : point). Sum O E E1 A B C <=> Ar2 O E E1 A B C && (exists (A1 C1 : point). Pj E E1 A  A1 && Col O E1 A1 && Pj O E  A1 C1 && Pj O E1 B  C1 && Pj E1 E C1 C).
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#between_trivial2
+assert[name "Labelbetween_trivial2"] forall (A B : point). Bet A A B.
+#col_trivial_1
+assert[name "Labelcol_trivial_1"] forall (A B : point). Col A A B.
+#cong_reflexivity
+assert[name "Labelcong_reflexivity"] forall (A B : point). Cong A B A B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#l7_2
+assert[name "Labell7_2"] forall (M A B : point). Midpoint M A B => Midpoint M B A.
+#sum_A_O
+assert[name "Labelsum_A_O"] forall (A O E E1 : point). ~ Col O E E1 => Col O E A => Sum O E E1 A O A.
+#sum_O_B
+assert[name "Labelsum_O_B"] forall (B O E E1 : point). ~ Col O E E1 => Col O E B => Sum O E E1 O B B.
+#sum_comm
+assert[name "Labelsum_comm"] forall (A B C O E E1 : point). ~ Col O E E1 => Sum O E E1 A B C => Sum O E E1 B A C.
+#sum_uniquenessA
+assert[name "Labelsum_uniquenessA"] forall (B X Y C O E E1 : point). ~ Col O E E1 => Sum O E E1 X B C => Sum O E E1 Y B C => X=Y.
+#sum_uniquenessB
+assert[name "Labelsum_uniquenessB"] forall (A X Y C O E E1 : point). ~ Col O E E1 => Sum O E E1 A X C => Sum O E E1 A Y C => X=Y.
+goal forall (A B O E E1 : point). ~ Col O E E1 => Sum O E E1 A B A => B=O.

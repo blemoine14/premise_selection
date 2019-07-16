@@ -1,0 +1,33 @@
+include "../rew_type.zf".
+rewrite[name "LabelAr2"] forall (O E E1 A B C : point). Ar2 O E E1 A B C <=> ~ Col O E E1 && Col O E A && Col O E B && Col O E C.
+#bet_col
+assert[name "Labelbet_col"] forall (A B C : point). Bet A B C => Col A B C.
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#between_trivial
+assert[name "Labelbetween_trivial"] forall (A B : point). Bet A B B.
+#between_trivial2
+assert[name "Labelbetween_trivial2"] forall (A B : point). Bet A A B.
+#col_trivial_1
+assert[name "Labelcol_trivial_1"] forall (A B : point). Col A A B.
+#cong_identity
+assert[name "Labelcong_identity"] forall (A B C : point). Cong A B C C => A = B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#diff_uniqueness
+assert[name "Labeldiff_uniqueness"] forall (O E E1 A B D1 D2 : point). Diff O E E1 A B D1 => Diff O E E1 A B D2 => D1=D2.
+#l6_6
+assert[name "Labell6_6"] forall (P A B : point). Out P A B => Out P B A.
+#l7_2
+assert[name "Labell7_2"] forall (M A B : point). Midpoint M A B => Midpoint M B A.
+#perp_in_sym
+assert[name "Labelperp_in_sym"] forall (A B C D X : point). Perp_at X A B C D => Perp_at X C D A B.
+#prod_assoc1
+assert[name "Labelprod_assoc1"] forall (O E E1 A B C AB BC ABC : point). Prod O E E1 A B AB => Prod O E E1 B C BC => (Prod O E E1 A BC ABC => Prod O E E1 AB C ABC).
+#prod_assoc2
+assert[name "Labelprod_assoc2"] forall (O E E1 A B C AB BC ABC : point). Prod O E E1 A B AB => Prod O E E1 B C BC => (Prod O E E1 AB C ABC => Prod O E E1 A BC ABC).
+#sum_assoc_1
+assert[name "Labelsum_assoc_1"] forall (O E E1 A B C AB BC ABC : point). Sum O E E1 A B AB => Sum O E E1 B C BC => Sum O E E1 A BC ABC => Sum O E E1 AB C ABC.
+#sum_assoc_2
+assert[name "Labelsum_assoc_2"] forall (O E E1 A B C AB BC ABC : point). Sum O E E1 A B AB => Sum O E E1 B C BC => Sum O E E1 AB C ABC => Sum O E E1 A BC ABC.
+goal forall (O E E1 S U1 U2 A AX AY B BX BY C CX CY AXMBX AYMBY BXMCX BYMCY XProd YProd : point). Cd O E S U1 U2 A AX AY => Cd O E S U1 U2 B BX BY => Cd O E S U1 U2 C CX CY => Diff O E E1 AX BX AXMBX => Diff O E E1 AY BY AYMBY => Diff O E E1 BX CX BXMCX => Diff O E E1 BY CY BYMCY => Prod O E E1 AXMBX BYMCY XProd => Prod O E E1 AYMBY BXMCX YProd => (Col A B C <=> XProd=YProd).

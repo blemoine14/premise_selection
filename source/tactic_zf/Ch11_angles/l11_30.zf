@@ -1,0 +1,49 @@
+include "../rew_type.zf".
+rewrite[name "LabelPar"] forall (A B C D : point). Par A B C D <=> Par_strict A B C D || (A != B && C != D && Col A C D && Col B C D).
+#between_symmetry
+assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
+#between_trivial
+assert[name "Labelbetween_trivial"] forall (A B : point). Bet A B B.
+#col_conga_col
+assert[name "Labelcol_conga_col"] forall (A B C D E F : point). Col A B C => CongA A B C D E F => Col D E F.
+#col_permutation_1
+assert[name "Labelcol_permutation_1"] forall (A B C : point). Col A B C => Col B C A.
+#col_permutation_2
+assert[name "Labelcol_permutation_2"] forall (A B C : point). Col A B C => Col C A B.
+#col_permutation_3
+assert[name "Labelcol_permutation_3"] forall (A B C : point). Col A B C => Col C B A.
+#col_permutation_4
+assert[name "Labelcol_permutation_4"] forall (A B C : point). Col A B C => Col B A C.
+#col_permutation_5
+assert[name "Labelcol_permutation_5"] forall (A B C : point). Col A B C => Col A C B.
+#col_trivial_3
+assert[name "Labelcol_trivial_3"] forall (A B : point). Col A B A.
+#cong_identity
+assert[name "Labelcong_identity"] forall (A B C : point). Cong A B C C => A = B.
+#cong_reflexivity
+assert[name "Labelcong_reflexivity"] forall (A B : point). Cong A B A B.
+#cong_symmetry
+assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
+#conga_sym
+assert[name "Labelconga_sym"] forall (A B C A1 B1 C1 : point). CongA A B C A1 B1 C1 => CongA A1 B1 C1 A B C.
+#eq_dec_points
+assert[name "Labeleq_dec_points"] forall (A B : point). A=B || A!=B.
+#ex_eqa
+assert[name "Labelex_eqa"] forall (a1 a2 : point->point->point->prop). (exists (A B C : point). Ang A B C a1 && Ang A B C a2) => EqA a1 a2.
+#l6_21
+assert[name "Labell6_21"] forall (A B C D P Q : point). ~Col A B C => C!=D => Col A B P => Col A B Q => Col C D P => Col C D Q => P=Q.
+#l6_6
+assert[name "Labell6_6"] forall (P A B : point). Out P A B => Out P B A.
+#l8_14_2_1b_bis
+assert[name "Labell8_14_2_1b_bis"] forall (A B C D X : point). Perp A B C D => Col X A B => Col X C D => Perp_at X A B C D.
+#not_col_distincts
+assert[name "Labelnot_col_distincts"] forall (A B C : point). ~Col A B C => ~Col A B C && A!=B && B!=C && A!=C.
+#out_trivial
+assert[name "Labelout_trivial"] forall (P A : point). A!=P => Out P A A.
+#perp_comm
+assert[name "Labelperp_comm"] forall (A B C D : point). Perp A B C D => Perp B A D C.
+#perp_in_right_comm
+assert[name "Labelperp_in_right_comm"] forall (A B C D X : point). Perp_at X A B C D => Perp_at X A B D C.
+#perp_in_sym
+assert[name "Labelperp_in_sym"] forall (A B C D X : point). Perp_at X A B C D => Perp_at X C D A B.
+goal forall (A B C D E F A1 B1 C1 D1 E1 F1 : point). LeA A B C D E F => CongA A B C A1 B1 C1 => CongA D E F D1 E1 F1 => LeA A1 B1 C1 D1 E1 F1.
