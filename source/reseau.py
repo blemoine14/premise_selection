@@ -28,7 +28,6 @@ class Reseau:
 	binarizer=None
 
 	embedding_dim=50
-	max_num_words=1000
 	filter_sizes=[3,4,5]
 	num_filters = 50
 	drop = 0.2
@@ -124,7 +123,7 @@ class Reseau:
 
 		inputs = Input(shape=(self.input_length,))
 
-		vocabulary_size=min(len(self.tokenizer.word_index)+1,self.max_num_words)
+		vocabulary_size=len(self.tokenizer.word_index)+1
 	
 		embedding = Embedding(vocabulary_size, self.embedding_dim)(inputs)
 

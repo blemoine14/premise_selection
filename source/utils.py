@@ -2,6 +2,9 @@ import json
 from scipy import stats
 import os
 import re
+import itertools
+import matplotlib.pyplot as plt
+import pickle
 
 
 def ensure_dir(file_path):
@@ -30,7 +33,7 @@ def parse_special_characters(text) :
 		text_cpy[i]=re.sub(r'([()])', r' \1 ', text_cpy[i])
 	return text_cpy
 
-def plot_history(self,history):
+def plot_history(history):
 	"""
 	Prend l'historique de l'apprentissage (retour de la méthode "fit" du modele)
 	Affiche l'évolution de la top_k_categorical_accuracy et de la loss du réseau sur les données de test et d'entrainement, lors de l'apprentissage
@@ -115,3 +118,66 @@ def display_balance_of_classes(y) :
 	oc=[value for value in oc]
 	plt.plot(range(len(y[0])), sorted(oc,reverse=True), label = "nombre d'occurences")
 	plt.show()
+
+
+def get_tactic_data_from_file(datas,plot=False) :
+	"""
+	Prend en entre un fichier data (retour d'une des tactiques)
+	Retourne la liste des noms des theoremes 
+	"""
+	seuil=[]
+	done=[]
+	notdone=[]
+	gaveup=[]
+	ressourceout=[]
+	timeout=[]
+	for i in range(len(datas)) :
+		seuil.append(datas[i][0])
+		done.append(len(list(itertools.chain.from_iterable([data[1] for data in datas[:(i+1)]]))))
+		notdone.append(len(datas[i][2]))
+		gaveup.append(len(datas[i][3]))
+		ressourceout.append(len(datas[i][4]))
+		timeout.append(len(datas[i][5]))
+	if plot :
+		x=seuil
+		y1=done
+		y2=notdone
+		y3=gaveup
+		y4=ressourceout
+		y5=timeout
+		plt.plot(x,y1,linewidth=2.0,label = "done")
+		plt.plot(x,y3,linewidth=2.0,label = "gave_up")
+		plt.plot(x,y4,linewidth=2.0,label = "ressource_out")
+		plt.plot(x,y5,linewidth=2.0,label = "time_out")
+		plt.xlim(x[0]+0.01,x[-1]-0.01)
+		plt.legend()
+		plt.show()
+	return list(itertools.chain.from_iterable([data[1] for data in datas[:(len(datas))]])),datas[len(datas)-1][2],datas[len(datas)-1][3],datas[len(datas)-1][4],datas[len(datas)-1][5]
+
+
+def get_prop_th_proved(th_proved_json_file,data_pickle_file):
+	"""
+	Prend en parametre un fichiers json, contenant une liste de nom de theoremes, et un fichier data (retour d'une des tactiques)
+	Retourne les proportions de theoremes prouvés appartenant et n'appartenant pas à la liste donnée
+	"""
+
+	th_to_test = json_to_list_or_dict(th_proved_json_file)
+
+	with open(data_pickle_file, 'rb') as handle:
+		th_proved = pickle.load(handle)
+
+	done,notdone,gaveup,ressourceout,timeout = get_tactic_data_from_file(th_proved)
+
+	th_already_proved=0
+	new_th_proved=0
+
+	th_not_proved = list(set(done+notdone)-set(th_to_test))
+
+	for th in done :
+		if th in th_to_test :
+			th_already_proved+=1
+		else :
+			new_th_proved+=1
+
+	print("Proportion de preuves effectuées parmis les anciens théorèmes prouvés :",th_already_proved/len(th_to_test),"\nProportion de preuves effectuées parmis les anciens théorèmes non prouvés",new_th_proved/len(th_not_proved))
+	return th_already_proved/len(th_to_test),new_th_proved/len(th_not_proved)

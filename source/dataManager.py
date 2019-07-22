@@ -1,5 +1,7 @@
 from utils import *
 import re
+from decimal import Decimal
+
 
 
 class DataManager :
@@ -28,12 +30,10 @@ class DataManager :
 
 		self.struct_dict = json_to_list_or_dict(data_dir+struct_file)
 
-		self.th_valid=None
-
 
 	def get_all_th(self):
 		"""
-		retourne le nom de tout les théorèmes connues
+		Retourne le nom de tout les théorèmes connues
 		"""
 		return list(self.ax_th_declaration.keys())
 
@@ -45,7 +45,7 @@ class DataManager :
 
 	def get_rewrites_definitions(self,rew_def_file_path) :
 		"""
-		parcourt le fichier rew_def_file contenant les déclarations des règles de réécriture
+		Parcourt le fichier rew_def_file contenant les déclarations des règles de réécriture
 		retourne un dictonnaire dont les valeurs sont de la forme (symbole réécrit => règle de réécriture)
 		"""
 		rewrite = dict()
@@ -70,7 +70,7 @@ class DataManager :
 
 	def get_ax_th_definitions(self,ax_th_file_path) :
 		"""
-		parcourt le fichier ax_th_file contenant les déclarations des axiomes et théorèmes
+		Parcourt le fichier ax_th_file contenant les déclarations des axiomes et théorèmes
 		retourne un dictonnaire dont les valeurs sont de la forme (nom du théorème ou axiome => déclaration)
 		"""
 		th_decl = dict()
@@ -87,7 +87,7 @@ class DataManager :
 
 	def get_ax_th_names(self,ax_th_file_path) :
 		"""
-		retourne la liste des noms des axiomes et la liste des noms des theoremes presents dans le fichier ax_th_file_path
+		Retourne la liste des noms des axiomes et la liste des noms des theoremes presents dans le fichier ax_th_file_path
 		"""
 		is_axiom=False
 		is_th=False
@@ -138,12 +138,120 @@ class DataManager :
 		                res.append(w)
 		dep_file.close()
 		return res
-
-	def set_th_valid(self,file):
-		self.th_valid = json_to_list_or_dict(file)
+		
+	def dep_to_zf(self,lemme,dep_file_name,zf_file_name) :
+		"""
+		Convertit un fichier dep en file zf, necessite le nom du lemme correspondant au fichier dep pour pouvoir ecrire le but
+		"""    
+		dep_list=self.dep_to_list(dep_file_name)
+		
+		ensure_dir(zf_file_name)
+		f=open(zf_file_name,"w+")
+		f.write("include \"../tarski_term_def.zf\".\n")
+		for dep in dep_list :
+		    if dep in self.get_all_th() :
+		        if dep==lemme :
+		            f.write("#include itself\n")
+		        else :
+		            f.write("#"+dep+"\n")
+		            f.write(self.ax_th_declaration[dep])
+		    if dep in self.types :
+		        f.write(self.rewrite_declaration[dep])
+		        
+		f.write("goal "+th_declaration_to_text(self.ax_th_declaration[lemme]))
+		f.close()
+		
+	def dep_dir_to_zf_dir(self,dep_dir,zf_dir) :
+		"""
+		Le premier dossier passé en parametre doit avoir une architecture correspondant aux informations du dataManager
+		Convertit l'ensemble des fichiers dep du premier dossier en fichiers zf dans le second
+		"""
+		nb_convert=0
+		nb_parcour=0
+		if os.path.exists(dep_dir) :
+		    for chapter in self.struct_dict :
+		        ensure_dir(zf_dir+chapter)
+		        for lemme in self.struct_dict[chapter] :
+		            nb_parcour+=1
+		            if os.path.exists(dep_dir+chapter+"/"+lemme+".dep") :
+		                self.dep_to_zf(lemme,dep_dir+chapter+"/"+lemme+".dep",zf_dir+chapter+"/"+lemme+".zf")
+		                nb_convert+=1
+		            print("done :",nb_convert,"progress :",round(nb_parcour/len(self.get_all_th())*100,2),"%")
+		    print("nb_file_converted = "+str(nb_convert))
+		else :
+		    print("no such directory : "+dep_dir)
+		    
+	def write_dep(self,th_dep,rew_dep,dep_file):
+		"""
+		Ecrit le fichier dep a partir de la liste des axiomes et lemmes, et de la liste des regles de reecritures donnees
+		"""
+		with open(dep_file,"w+") as dep_f :
+		    dep_f.write("lemme :")
+		    for th in list(set(th_dep)) :
+		        dep_f.write(" "+th)
+		        
+		    dep_f.write("\nrewrite :")
+		    for rew in list(set(rew_dep)) :
+		        dep_f.write(" "+rew)
+		    
+	def dot_to_dep(self,dot_file,dep_file) :
+		"""
+		convertit un fichier dot en fichier dep
+		"""
+		th_dep=[]
+		rew_dep=[]
+		ensure_dir(dep_file)
+		with open(dot_file,"r") as dot_f :
+		    lines = dot_f.readlines()
+		    for line in lines :
+		        for word in self.types :
+		            if "\\\"Label"+word+"\\\"" in line :
+		                rew_dep.append(word)
+		        for word in self.get_all_th() :
+		            if "\\\"Label"+word+"\\\"" in line :
+		                th_dep.append(word)
+		self.write_dep(th,rew,dep_file)
+		
+	def zf_to_dep(self,zf_file,dep_file) :
+		"""
+		convertit un fichier zf en fichier dep
+		"""
+		th_dep=[]
+		rew_dep=[]
+		ensure_dir(dep_file)
+		with open(zf_file,"r") as zf_f :
+		    lines = zf_f.readlines()
+		    for line in lines :
+		        for word in self.types :
+		            if "\"Label"+word+"\"" in line :
+		                rew_dep.append(word)
+		        for word in self.get_all_th() :
+		            if "\"Label"+word+"\"" in line :
+		                th_dep.append(word)
+		self.write_dep(th_dep,rew_dep,dep_file)
+		
+	def zf_dir_to_dep_dir(self,zf_dir,dep_dir) :
+		"""
+		Le premier dossier passé en parametre doit avoir une architecture correspondant aux informations du dataManager
+		Convertit l'ensemble des fichiers dep du premier dossier en fichiers zf dans le second
+		"""
+		nb_convert=0
+		nb_parcour=0
+		if os.path.exists(zf_dir) :
+		    for chapter in self.struct_dict :
+		        ensure_dir(dep_dir+chapter)
+		        for lemme in self.struct_dict[chapter] :
+		            nb_parcour+=1
+		            if os.path.exists(zf_dir+chapter+"/"+lemme+".zf") :
+		                self.zf_to_dep(zf_dir+chapter+"/"+lemme+".zf",dep_dir+chapter+"/"+lemme+".dep")
+		                nb_convert+=1
+		            print("done :",nb_convert,"progress :",round(nb_parcour/len(self.get_all_th())*100,2),"%")
+		    print("nb_file_converted = "+str(nb_convert))
+		else :
+		    print("no such directory : "+dep_dir)
 
 		
-	def create_data(self,dep_dir_path) :
+	def create_data(self,dep_dir_path,th_valid) :
 		"""
 		    retourne deux listes :
 				x contenant les énoncés des théorèmes dont le nom appartient à la liste theorem_list
@@ -152,7 +260,7 @@ class DataManager :
 		x,labeled_y=[],[]
 		for chapter in self.struct_dict :
 		    for lemme in self.struct_dict[chapter] :
-		        if th_valid is None or lemme in self.th_valid :
+		        if th_valid is None or lemme in th_valid :
 		            index = self.ax_th_declaration[lemme].find("]")
 		            x.append(th_declaration_to_text(self.ax_th_declaration[lemme]))
 		            labeled_y.append(self.dep_to_list(dep_dir_path+chapter+"/"+lemme+".dep"))

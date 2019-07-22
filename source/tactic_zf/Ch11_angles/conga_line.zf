@@ -1,9 +1,0 @@
-include "../rew_type.zf".
-rewrite[name "LabelCong_3"] forall (A B C A1 B1 C1 : point). Cong_3 A B C A1 B1 C1 <=> Cong A B A1 B1 && Cong A C A1 C1 && Cong B C B1 C1.
-#between_symmetry
-assert[name "Labelbetween_symmetry"] forall (A B C : point). Bet A B C => Bet C B A.
-#cong_symmetry
-assert[name "Labelcong_symmetry"] forall (A B C D : point). Cong A B C D => Cong C D A B.
-#l6_6
-assert[name "Labell6_6"] forall (P A B : point). Out P A B => Out P B A.
-goal forall (A B C A1 B1 C1 : point). A!=B => B!=C => A1 !=B1 => B1!=C1 => Bet A B C => Bet A1 B1 C1 => CongA A B C A1 B1 C1.

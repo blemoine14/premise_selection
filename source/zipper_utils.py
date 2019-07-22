@@ -9,25 +9,25 @@ import os
 import time
 from threading import Thread, Semaphore, RLock
 
-n_jobsZ=6
-semZ = Semaphore(n_jobsZ)
 lockZ = RLock()
 zipper_exec_time=dict()
 
 class Zipperposition(Thread):
 
-    def __init__(self, zf_dir,chapter,lemme):
+    def __init__(self, zf_dir,chapter,lemme,timeout=30,mem_limit=4000):
         Thread.__init__(self)
         self.zf_dir=zf_dir
         self.chapter=chapter
         self.lemme=lemme
+        self.timeout=timeout
+        self.mem_limit=mem_limit
 
     def run(self):
         global zipper_exec_time
         t=time.time()
         lemme_file=self.zf_dir+self.chapter+"/"+self.lemme
         if os.path.isfile(lemme_file+".zf") :
-            res=os.popen("zipperposition -o none --mem-limit 4000 --timeout 30 "+lemme_file+".zf").read()
+            res=os.popen("zipperposition -o none --mem-limit "+str(self.mem_limit)+" --timeout "+str(self.timeout)+" "+lemme_file+".zf").read()
             with lockZ :
                 if res.endswith("output end Refutation\n") :
                     print(self.lemme+" : Valid")

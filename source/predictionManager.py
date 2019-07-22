@@ -91,6 +91,9 @@ class PredictionManager :
 		    total_precision=0
 		if total_prop_classe is None :
 		    total_prop_classe=0
+		if fail_size==0 :
+		    fail_size=1
+		    total_precision=1
 		return (sum_res/size,total_prop_classe/size,total_precision/fail_size)
 
 	def test_pred_top_k(self,dep_dir_path,ths_to_test,k=5) :
@@ -128,6 +131,9 @@ class PredictionManager :
 		    total_precision=0
 	    if total_prop_classe is None :
 		    total_prop_classe=0
+	    if fail_size==0 :
+		    fail_size=1
+		    total_precision=1
 	    return (sum_res/size,total_prop_classe/size,total_precision/fail_size)
 	    
 	    
