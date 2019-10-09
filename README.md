@@ -6,9 +6,9 @@ Proposant une utilisation du deep learning pour sélectionner les prémisses né
 
 
 ## Nous utilisons :
-  l'axiomatique de Tarski  
-  la bibliothéque GeoCoq (https://geocoq.github.io/GeoCoq/) fournissant la formalisation des théorèmes des 16 premiers chapitres du livre "Metamathematische Methoden in der Geometrie" écrit par Schwabhäuser, W & Szmielew, W & Tarski, A.
-  le logiciel de preuve automatique zipperposition (https://github.com/c-cube/zipperposition)
+  * l'axiomatique de Tarski. 
+  * la bibliothéque GeoCoq (https://geocoq.github.io/GeoCoq/) fournissant la formalisation des théorèmes des 16 premiers chapitres du livre "Metamathematische Methoden in der Geometrie" écrit par Schwabhäuser, W & Szmielew, W & Tarski, A.
+  * le logiciel de preuve automatique zipperposition (https://github.com/c-cube/zipperposition)
   
 ## Contenu :
 
