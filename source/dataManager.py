@@ -233,7 +233,7 @@ class DataManager :
 	def zf_dir_to_dep_dir(self,zf_dir,dep_dir) :
 		"""
 		Le premier dossier passé en parametre doit avoir une architecture correspondant aux informations du dataManager
-		Convertit l'ensemble des fichiers dep du premier dossier en fichiers zf dans le second
+		Convertit l'ensemble des fichiers zf du premier dossier en fichiers dep dans le second
 		"""
 		nb_convert=0
 		nb_parcour=0
