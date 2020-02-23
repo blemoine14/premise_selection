@@ -4,7 +4,7 @@ import itertools
 from shutil import copyfile
 import argparse
 
-def tactic_seuil(predictionManager,zf_dir_path,list_of_lemme,min_seuil=1e-7,seuil=0.9,timeout=30,mem_limit=4000) :
+def tactic_seuil(predictionManager,zf_dir_path,list_of_lemme,min_seuil=1e-5,seuil=0.9,timeout=30,mem_limit=4000) :
 
     if list_of_lemme is None :
         list_of_lemme = predictionManager.dataManager.th_names
